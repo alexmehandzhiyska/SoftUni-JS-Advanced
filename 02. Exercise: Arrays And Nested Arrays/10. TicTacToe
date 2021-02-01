@@ -1,0 +1,72 @@
+function solve(arr) {
+    let board = [
+        [false, false, false],
+        [false, false, false],
+        [false, false, false],
+    ];
+
+    let sign = 'X';
+    for (const command of arr) {
+        let [row, col] = command.split(' ');
+        if (board[row][col] == false) {
+            board[row][col] = sign;
+        } else {
+            console.log('This place is already taken. Please choose another!');
+            continue;
+        }
+
+        let result = isWinner(board, sign);
+        if (result) {
+            console.log(`Player ${sign} wins!`);
+            break;
+        }
+
+        if (!board.flat(1).includes(false)) {
+            console.log('The game ended! Nobody wins :(');
+            break;
+        }
+
+        sign = sign == 'X' ? 'O' : 'X';
+    }
+
+    function isWinner(board, sign) {
+        let isWinner = false;
+        for (let i = 0; i < 3; i++) {
+            if (
+                board[i][0] == sign &&
+                board[i][1] == sign &&
+                board[i][2] == sign
+            ) {
+                isWinner = true;
+                break;
+            }
+
+            if (
+                board[0][i] == sign &&
+                board[1][i] == sign &&
+                board[2][i] == sign
+            ) {
+                isWinner = true;
+                break;
+            }
+
+            if (
+                (board[0][0] == sign &&
+                    board[1][1] == sign &&
+                    board[2][2] == sign) ||
+                (board[0][2] == sign &&
+                    board[1][1] == sign &&
+                    board[2][0] == sign)
+            ) {
+                isWinner = true;
+                break;
+            }
+        }
+
+        return isWinner;
+    }
+
+    board.forEach((row) => {
+        console.log(row.join('\t'));
+    });
+}
