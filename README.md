@@ -1,1 +1,1 @@
-# JS-ADVANCED
+# JS-ADVANCED SoftUni
